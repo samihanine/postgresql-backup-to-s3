@@ -4,7 +4,7 @@ FROM alpine:latest AS build
 WORKDIR /root
 
 # Install Node.js, npm and PostgreSQL client
-RUN apk add --update --no-cache nodejs npm postgresql-client
+RUN apk add --update --no-cache nodejs npm
 
 # Copy package files and install all dependencies including devDependencies
 COPY package*.json ./
@@ -31,7 +31,8 @@ COPY --from=build /root/node_modules ./node_modules
 COPY --from=build /root/dist ./dist
 
 # Install MySQL and MongoDB clients, and necessary runtime libraries
-RUN apk add --update --no-cache mysql-client mongodb-tools nodejs
+RUN apk add --update --no-cache postgresql-client nodejs npm
+RUN apt-get install postgresql-client
 
 # Set the entry point to the compiled JavaScript file
 ENTRYPOINT ["node", "dist/index.js"]
