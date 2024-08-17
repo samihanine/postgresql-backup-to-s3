@@ -32,7 +32,6 @@ COPY --from=build /root/dist ./dist
 
 # Install MySQL and MongoDB clients, and necessary runtime libraries
 RUN apk add --update --no-cache postgresql-client nodejs npm
-RUN apt-get install postgresql-client
 
 # Set the entry point to the compiled JavaScript file
 ENTRYPOINT ["node", "dist/index.js"]
